@@ -1,0 +1,41 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.50.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 80c28bec817d7e2f8e1a2bc9c5482de588ccb2dc Build.PL
+SHA1 1723a571348e08e525952f272d858e299b7c8e05 Changes
+SHA1 3f422dbd0576c6671cdd081b2b33b3926efd66aa MANIFEST
+SHA1 8dca830ec4edeb11350873ded86168c14693016c META.yml
+SHA1 9d284489c2a53028e6e73bc3f7e84db69de3d5f8 Makefile.PL
+SHA1 321146be652bc30d3a55c4e6aff1b7a61136b494 README
+SHA1 8c50e3345727768b348e762c0cf94858f2dd9554 lib/Class/Tie/InsideOut.pm
+SHA1 6bf82e97718e8910012bda4dfb906b97b0521183 lib/Tie/InsideOut.pm
+SHA1 8fb2cf871b4632ceb10dbd5bfc7c6e5f050feb02 t/01-load.t
+SHA1 02440a5e67f39be80e35a622eaaa0c6b706222b1 t/02-basic.t
+SHA1 2089b90051d1180577579a832ed8a60442915bdd t/03-class.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iQGZAwUBQ+/HKcWi0Y+7ctnFAQIr7wwgui28HH3MqSvxMxgwyfiK8bwLmAgpnX03
+D54GSj5yiHxTOnrPxSxVKrZccn4ofyaSSTILiIJ7lX9kV28IHIg+BRVdI+qIWneU
+aT2e2pz/VAz5LW6YTmYYwkEgOZBQRmZCxmP4RyfsV8hUZp1EQf6qsL1eylFgq/vx
+IaCSXAE6In5gNTldNU0s3CwD0oVvmfhLbnpVrf7dmEpMz6XuKfgL0Sq8fMYMXyhS
+uLGhSF6hKeIIpgmY5WpDzFCUtAl2Vf305qa0aIRqPmhuSfSavyZ2R11A2acs87tn
+uj+tmyIBYFnPEfd1FccpZf0cjvNfUjc+7pv4fXJi4JDSDsN0NkGt+2P8SnDZQnS4
+T7Rbp2pIQfxlUGos4m4YPhoBCG2EFY/TeRtJRMRQToWIA72HN1siUMTtYOvXtd4w
++85/YJBqAQv0BrE8Qi74/ONbucjEE8dZrmIy0SpzxdeAnP1wiAb1HK48AatWSkii
+fA6kZJ7J5G6vozOnxaUil0lajSOS90vkMrO/Ow==
+=SQT8
+-----END PGP SIGNATURE-----

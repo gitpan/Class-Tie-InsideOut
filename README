@@ -1,0 +1,74 @@
+NAME
+    Class::Tie::InsideOut - Inside-out objects on the cheap using tied
+    hashes
+
+REQUIREMENTS
+    Perl 5.6.1. No non-core modules are used.
+
+INSTALLATION
+    Installation can be done using the traditional Makefile.PL or the newer
+    Build.PL methods.
+
+    Using Makefile.PL:
+
+      perl Makefile.PL
+      make test
+      make install
+
+    (On Windows platforms you should use "nmake" instead.)
+
+    Using Build.PL (if you have Module::Build installed):
+
+      perl Build.PL
+      perl Build test
+      perl Build install
+
+SYNOPSIS
+      package MyClass;
+
+      use Class::Tie::InsideOut;
+
+      our @ISA = qw( Class::Tie::InsideOut );
+
+      our %GoodKey;
+
+      sub bad_method {
+        my $self = shift;
+        return $self->{BadKey}; # this won't work
+      }
+
+      sub good_method {
+        my $self = shift;
+        return $self->{GoodKey}; # %GoodKey is defined
+      }
+
+DESCRIPTION
+    This module is a proof-of-concept on of implementing inside-out objects
+    using tied hashes. It makes use of the Tie::InsideOut package to tie
+    hash keys to hashes in the calling package's namespace.
+
+    Fields are accessed as hash keys, so in theory traditional Perl objects
+    can be easily converted into inside-out objects.
+
+    More information can be found in the module documentation.
+
+SEE ALSO
+    This module is a wrapper for Tie::InsideOut.
+
+    There are various other inside-out object packages on CPAN. Among them:
+
+      Class::InsideOut
+      Object::InsideOut
+
+AUTHOR
+    Robert Rothenberg <rrwo at cpan.org>
+
+  Suggestions and Bug Reporting
+    Feedback is always welcome. Please use the CPAN Request Tracker at
+    http://rt.cpan.org to submit bug reports.
+
+LICENSE
+    Copyright (c) 2006 Robert Rothenberg. All rights reserved. This program
+    is free software; you can redistribute it and/or modify it under the
+    same terms as Perl itself.
+

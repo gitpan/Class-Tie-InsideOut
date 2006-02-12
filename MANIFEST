@@ -1,0 +1,12 @@
+Build.PL
+Changes
+Makefile.PL
+MANIFEST
+README
+t/01-load.t
+t/02-basic.t
+t/03-class.t
+lib/Class/Tie/InsideOut.pm
+lib/Tie/InsideOut.pm
+META.yml
+SIGNATURE    Added here by Module::Build
