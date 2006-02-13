@@ -1,6 +1,9 @@
 Revision history for Perl extension Tie::InsideOut.
 
-0.02
+0.021 Mon Feb 13 2006
+	- removed namespace validation, which was too strict
+
+0.02  Mon Feb 13 2006
 	- added more tests
 	- fixed namespace validation
 	- checks that the symbol used for the key is a hash

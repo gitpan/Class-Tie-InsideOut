@@ -2,7 +2,7 @@ package Class::Tie::InsideOut;
 
 require Tie::InsideOut;
 
-our $VERSION = '0.02';
+our $VERSION = '0.021';
 
 sub new {
   my $class = shift;

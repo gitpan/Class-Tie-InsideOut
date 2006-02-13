@@ -4,7 +4,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.021';
 
 my $Counter;
 my %NameSpaces;
@@ -17,9 +17,9 @@ sub TIEHASH {
   {
     my $caller = (shift || (caller)[0]);
     no strict 'refs';
-    unless (exists *{"main::"}->{$caller."::"}) {
-      die "$caller is not a valid package";
-    }
+#     unless (exists *{"main::"}->{$caller."::"}) {
+#       die "$caller is not a valid package";
+#     }
     $NameSpaces{$id} = *{$caller."::"};
   }
   $Keys{$id} = { };
