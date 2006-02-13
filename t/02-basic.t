@@ -1,10 +1,14 @@
 #!/usr/bin/perl
 
+use strict;
+use warnings;
+
 use Test::More tests => 22;
 
-use_ok('Tie::InsideOut');
+use_ok('Tie::InsideOut', 0.02);
 
-our %Key1 = ();
+our %Key1;
+our @Key2;
 
 {
   my $hash_ref = { };

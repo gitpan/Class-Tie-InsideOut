@@ -4,7 +4,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 my $Counter;
 my %NameSpaces;
@@ -15,12 +15,12 @@ sub TIEHASH {
   my $id    = ++$Counter;
 
   {
-    my $caller = (shift || (caller)[0]) . "::";
+    my $caller = (shift || (caller)[0]);
     no strict 'refs';
-    $NameSpaces{$id} = *{$caller};
-    unless (exists $NameSpaces{$id}) {
-      die "bad namespace: $caller";
+    unless (exists *{"main::"}->{$caller."::"}) {
+      die "$caller is not a valid package";
     }
+    $NameSpaces{$id} = *{$caller."::"};
   }
   $Keys{$id} = { };
 
@@ -56,10 +56,7 @@ sub FETCH {
   my $self = shift;
   my $key  = shift;
 
-  my $id   = $$self;
-  unless (exists $NameSpaces{$id}->{$key}) {
-    die "Symbol \%".$key." does not exist in callers namespace";
-  }
+  my $id   = $self->_validate_key($key);
   $NameSpaces{$id}->{$key}->{$id};
 }
 
@@ -67,10 +64,7 @@ sub EXISTS {
   my $self = shift;
   my $key  = shift;
 
-  my $id   = $$self;
-  unless (exists $NameSpaces{$id}->{$key}) {
-    die "Symbol \%".$key." does not exist in callers namespace";
-  }
+  my $id   = $self->_validate_key($key);
   exists $NameSpaces{$id}->{$key}->{$id};
 }
 
@@ -90,10 +84,7 @@ sub DELETE {
   my $self = shift;
   my $key  = shift;
 
-  my $id   = $$self;
-  unless (exists $NameSpaces{$id}->{$key}) {
-    die "Symbol \%".$key." does not exist in callers namespace";
-  }
+  my $id   = $self->_validate_key($key);
   delete $Keys{$id}->{$key};
   delete $NameSpaces{$id}->{$key}->{$id};
 }
@@ -103,16 +94,22 @@ sub STORE {
   my $key  = shift;
   my $val  = shift;
 
-  my $id   = $$self;
-  unless (exists $NameSpaces{$id}->{$key}) {
-    die "Symbol \%".$key." does not exist in callers namespace";
-  }
+  my $id   = $self->_validate_key($key);
   $Keys{$id}->{$key} = 1; # Track keys defined
   $NameSpaces{$id}->{$key}->{$id} = $val;
 }
 
 BEGIN {
   *new = \&TIEHASH;
+}
+
+sub _validate_key {
+  my ($self, $key) = @_;
+  my $id   = $$self;
+  if ((exists $NameSpaces{$id}->{$key}) && (ref *{$NameSpaces{$id}->{$key}}{HASH})) {
+    return $id;
+  }
+  die "Symbol \%".$key." does not exist in callers namespace";
 }
 
 1;
@@ -169,16 +166,26 @@ Using Build.PL (if you have Module::Build installed):
 This package ties hash so that the keys are the names of variables in the caller's
 namespace.  If the variable does not exist, then attempts to access it will die.
 
-An alternative namespace can be specified, if needed:
-
-  tie %hash, 'Tie::InsideOut', 'Other::Class';
-
 This gives a convenient way to restrict valid hash keys, as well as provide a
 transparent implementation of inside-out objects, as with L<Class::Tie::InsideOut>.
 
 This package also tracks which keys were set, and attempts to delete keys when an
 object is destroyed so as to conserve resources. (Whether the overhead in tracking
 used keys outweighs the savings is yet to be determined.)
+
+This version does little checking of the key names, beyond that there is a
+global hash variable with that name.  There are no checks against Using the
+name of a tied L<Tie::InsideOut> or L<Class::Tie::InsideOut> global hash
+variable as a key for itself, which has unpredicable (and possibly dangerous)
+results.
+
+Note that your keys must be specified as C<our> variables so that they are accessible
+from outside of the class, and not as C<my> variables.
+
+An alternative namespace can be specified, if needed:
+
+  tie %hash, 'Tie::InsideOut', 'Other::Class';
+
 
 =head1 SEE ALSO
 

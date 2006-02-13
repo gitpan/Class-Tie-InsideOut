@@ -2,7 +2,7 @@ package Class::Tie::InsideOut;
 
 require Tie::InsideOut;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub new {
   my $class = shift;
@@ -10,7 +10,6 @@ sub new {
   tie %$self, 'Tie::InsideOut', $class;
   bless $self, $class;
 }
-
 
 1;
 
@@ -86,6 +85,12 @@ More information can be found in the module documentation.
 
 To use, inherit our class from L<Class::Tie::InsideOut> and then specify
 the legal keys for your object to use as hashes within the classes namespace.
+
+This version does little checking of the key names, beyond that there is a
+global hash variable with that name.  There are no checks against Using the
+name of a tied L<Tie::InsideOut> or L<Class::Tie::InsideOut> global hash
+variable as a key for itself, which has unpredicable (and possibly dangerous)
+results.
 
 Note that your keys must be specified as C<our> variables so that they are accessible
 from outside of the class, and not as C<my> variables.

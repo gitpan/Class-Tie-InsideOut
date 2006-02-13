@@ -6,6 +6,7 @@ README
 t/01-load.t
 t/02-basic.t
 t/03-class.t
+t/04-badnamespace.t
 lib/Class/Tie/InsideOut.pm
 lib/Tie/InsideOut.pm
 META.yml
