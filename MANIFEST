@@ -4,9 +4,14 @@ Makefile.PL
 MANIFEST
 README
 t/01-load.t
+t/01-version.t
 t/02-basic.t
-t/03-class.t
+t/03-class-base.t
+t/03-class-isa.t
+t/03-inherited.t
 t/04-badnamespace.t
+t/05-clone.t
+t/05-storable.t
 lib/Class/Tie/InsideOut.pm
 lib/Tie/InsideOut.pm
 META.yml

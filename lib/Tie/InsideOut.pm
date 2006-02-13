@@ -4,7 +4,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-our $VERSION = '0.021';
+our $VERSION = '0.03';
 
 my $Counter;
 my %NameSpaces;
@@ -15,12 +15,10 @@ sub TIEHASH {
   my $id    = ++$Counter;
 
   {
-    my $caller = (shift || (caller)[0]);
+    my @caller = @_;
+       @caller = ( (caller)[0] ) unless (@caller);
     no strict 'refs';
-#     unless (exists *{"main::"}->{$caller."::"}) {
-#       die "$caller is not a valid package";
-#     }
-    $NameSpaces{$id} = *{$caller."::"};
+    $NameSpaces{$id} = [ map { *{$_."::"} } @caller ];
   }
   $Keys{$id} = { };
 
@@ -47,7 +45,7 @@ sub CLEAR {
   my $id   = $$self;
 
   foreach my $key (keys %{$Keys{$id}}) {
-    delete $NameSpaces{$id}->{$key}->{$id};
+    delete $NameSpaces{$id}->[$Keys{$id}->{$key}]->{$key}->{$id};
   }
   $Keys{$id} = { };
 }
@@ -56,16 +54,16 @@ sub FETCH {
   my $self = shift;
   my $key  = shift;
 
-  my $id   = $self->_validate_key($key);
-  $NameSpaces{$id}->{$key}->{$id};
+  my ($id, $idx) = $self->_validate_key($key);
+  $NameSpaces{$id}->[$idx]->{$key}->{$id};
 }
 
 sub EXISTS {
   my $self = shift;
   my $key  = shift;
 
-  my $id   = $self->_validate_key($key);
-  exists $NameSpaces{$id}->{$key}->{$id};
+  my ($id, $idx) = $self->_validate_key($key);
+  exists $NameSpaces{$id}->[$idx]->{$key}->{$id};
 }
 
 sub FIRSTKEY {
@@ -84,9 +82,9 @@ sub DELETE {
   my $self = shift;
   my $key  = shift;
 
-  my $id   = $self->_validate_key($key);
+  my ($id, $idx) = $self->_validate_key($key);
   delete $Keys{$id}->{$key};
-  delete $NameSpaces{$id}->{$key}->{$id};
+  delete $NameSpaces{$id}->[$idx]->{$key}->{$id};
 }
 
 sub STORE {
@@ -94,9 +92,9 @@ sub STORE {
   my $key  = shift;
   my $val  = shift;
 
-  my $id   = $self->_validate_key($key);
-  $Keys{$id}->{$key} = 1; # Track keys defined
-  $NameSpaces{$id}->{$key}->{$id} = $val;
+  my ($id, $idx) = $self->_validate_key($key);
+  $Keys{$id}->{$key} = $idx; # Track keys defined
+  $NameSpaces{$id}->[$idx]->{$key}->{$id} = $val;
 }
 
 BEGIN {
@@ -106,8 +104,21 @@ BEGIN {
 sub _validate_key {
   my ($self, $key) = @_;
   my $id   = $$self;
-  if ((exists $NameSpaces{$id}->{$key}) && (ref *{$NameSpaces{$id}->{$key}}{HASH})) {
-    return $id;
+
+  # We remember the namespace where we found the key if it's been used before
+
+  if (exists $Keys{$id}->{$key}) {
+    return ($id, $Keys{$id}->{$key});
+  }
+  else {
+    my $idx = 0;
+    while ($NameSpaces{$id}->[$idx]) {
+      if ((exists $NameSpaces{$id}->[$idx]->{$key}) &&
+	  (ref *{$NameSpaces{$id}->[$idx]->{$key}}{HASH})) {
+	return ($id, $idx);
+      }
+      $idx++;
+    }
   }
   die "Symbol \%".$key." does not exist in callers namespace";
 }
@@ -174,10 +185,13 @@ object is destroyed so as to conserve resources. (Whether the overhead in tracki
 used keys outweighs the savings is yet to be determined.)
 
 This version does little checking of the key names, beyond that there is a
-global hash variable with that name.  There are no checks against Using the
-name of a tied L<Tie::InsideOut> or L<Class::Tie::InsideOut> global hash
-variable as a key for itself, which has unpredicable (and possibly dangerous)
-results.
+global hash variable with that name.  It might be a hash intended as a
+field, or it might be one intended for something else. (You could hide
+them by specifying them as C<my> variables, though.)
+
+There are no checks against using the name of a tied L<Tie::InsideOut> or
+L<Class::Tie::InsideOut> global hash variable as a key for itself, which
+has unpredicable (and possibly dangerous) results.
 
 Note that your keys must be specified as C<our> variables so that they are accessible
 from outside of the class, and not as C<my> variables.
@@ -186,6 +200,10 @@ An alternative namespace can be specified, if needed:
 
   tie %hash, 'Tie::InsideOut', 'Other::Class';
 
+After version 0.03, multiple namespaces can be given:
+
+  use Tie::InsideOut 0.03;
+  tie %hash, 'Tie::InsideOut', (__PACKAGE__, @ISA);
 
 =head1 SEE ALSO
 

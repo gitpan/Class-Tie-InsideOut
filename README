@@ -47,10 +47,26 @@ DESCRIPTION
     using tied hashes. It makes use of the Tie::InsideOut package to tie
     hash keys to hashes in the calling package's namespace.
 
-    Fields are accessed as hash keys, so in theory traditional Perl objects
-    can be easily converted into inside-out objects.
+    Fields are accessed as hash keys, so in traditional Perl objects can be
+    easily converted into inside-out objects.
 
     More information can be found in the module documentation.
+
+REVISION HISTORY
+    A brief list of changes since the previous release:
+
+    0.03 Mon Feb 13 2006
+            - updated documentation
+            - inheritance issues fixed
+            - Tie::InsideOut can accept a list of namespaces to search
+            - recent revision history included in README
+            - use strict/warnings in tests
+            - added test to verify that versions match
+            - added test 'use base'
+            - added serialization tests with Clone and Storable
+
+    For a detailed history see the Changes file included in this
+    distribution.
 
 SEE ALSO
     This module is a wrapper for Tie::InsideOut.

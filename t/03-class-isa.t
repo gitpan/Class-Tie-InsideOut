@@ -2,6 +2,9 @@
 
 package InsideOut;
 
+use strict;
+use warnings;
+
 use Class::Tie::InsideOut;
 
 our @ISA = qw( Class::Tie::InsideOut );
@@ -21,6 +24,9 @@ sub get_val {
 }
 
 package main;
+
+use strict;
+use warnings;
 
 use Test::More tests => 4;
 

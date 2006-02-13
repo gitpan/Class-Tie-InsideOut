@@ -1,4 +1,14 @@
-Revision history for Perl extension Tie::InsideOut.
+Revision history for Perl extension Tie::InsideOut and Class::Tie::InsideOut.
+
+0.03 Mon Feb 13 2006
+	- updated documentation
+	- inheritance issues fixed
+	- Tie::InsideOut can accept a list of namespaces to search
+	- recent revision history included in README
+	- use strict/warnings in tests
+	- added test to verify that versions match
+	- added test 'use base'
+	- added serialization tests with Clone and Storable
 
 0.021 Mon Feb 13 2006
 	- removed namespace validation, which was too strict

@@ -5,6 +5,7 @@ WriteMakefile
           'NAME' => 'Class::Tie::InsideOut',
           'VERSION_FROM' => 'lib/Class/Tie/InsideOut.pm',
           'PREREQ_PM' => {
+                           'Class::ISA' => '0',
                            'Test::More' => '0'
                          },
           'INSTALLDIRS' => 'site',
