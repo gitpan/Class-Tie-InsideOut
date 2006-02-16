@@ -1,8 +1,20 @@
 Revision history for Perl extension Tie::InsideOut and Class::Tie::InsideOut.
 
+Possible incompatabilities with previous versions are highlighted with a '*'.
+
+0.04 Thu Feb 16 2006
+	- added MANIFEST.SKIP
+	* encapsulation is enforced: fields may only be accessed by
+	  methods which exist in the same namespace
+	* Tie::InsideOut no longer uses a list of namespaces
+	- removed usage of Class::ISA
+	- Tie::InsideOut uses Carp
+	- reorganized documentation to reflect various changes
+	- removed Clone and Storable tests
+
 0.03 Mon Feb 13 2006
 	- updated documentation
-	- inheritance issues fixed
+	- inheritance issues fixed, requires Class::ISA
 	- Tie::InsideOut can accept a list of namespaces to search
 	- recent revision history included in README
 	- use strict/warnings in tests

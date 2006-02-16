@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More tests => 22;
 
-use_ok('Tie::InsideOut', 0.02);
+use_ok('Tie::InsideOut', 0.04);
 
 our %Key1;
 our @Key2;
@@ -71,5 +71,6 @@ our @Key2;
   undef $@;
   eval { print STDERR $hash_ref->{Key2}; };
   ok( $@, "error in fetching invalid key" );
+
 }
 

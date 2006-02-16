@@ -55,18 +55,18 @@ DESCRIPTION
 REVISION HISTORY
     A brief list of changes since the previous release:
 
-    0.03 Mon Feb 13 2006
-            - updated documentation
-            - inheritance issues fixed
-            - Tie::InsideOut can accept a list of namespaces to search
-            - recent revision history included in README
-            - use strict/warnings in tests
-            - added test to verify that versions match
-            - added test 'use base'
-            - added serialization tests with Clone and Storable
+    0.04 Thu Feb 16 2006
+            - added MANIFEST.SKIP
+            * encapsulation is enforced: fields may only be accessed by
+              methods which exist in the same namespace
+            * Tie::InsideOut no longer uses a list of namespaces
+            - removed usage of Class::ISA
+            - Tie::InsideOut uses Carp
+            - reorganized documentation to reflect various changes
+            - removed Clone and Storable tests
 
-    For a detailed history see the Changes file included in this
-    distribution.
+    Incompatible changes are marked with a '*'. For a detailed history see
+    the Changes file included in this distribution.
 
 SEE ALSO
     This module is a wrapper for Tie::InsideOut.

@@ -6,10 +6,10 @@ my $build = Module::Build->new
      license => 'perl',
      requires => {
        'perl'             => '5.6.1',
-       'Class::ISA'       => 0,
+       'Carp'             => 0,
      },
      recommends => {
-       'Pod::Readme'      => 0.06,
+       'Pod::Readme'      => 0.06,           # for building distro
      },
      build_requires => {
        'Test::More'     => 0,

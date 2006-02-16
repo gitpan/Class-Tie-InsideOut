@@ -1,17 +1,15 @@
 package Class::Tie::InsideOut;
 
-require Class::ISA;
 require Tie::InsideOut;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 our @ISA = qw( );
 
 sub new {
   my $class = shift || __PACKAGE__;
   my $self = { };
-  tie %$self, 'Tie::InsideOut',
-    grep $_->isa('Class::Tie::InsideOut'), Class::ISA::self_and_super_path($class);
+  tie %$self, 'Tie::InsideOut';
   bless $self, $class;
 }
 
@@ -117,22 +115,31 @@ Converting a Perl module which uses "traditional" objects into one which
 uses inside-out objects can be a matter of adding L<Class::Tie::InsideOut>
 to the C<@ISA> list and adding the field names as global hashes.
 
+See the L</KNOWN ISSUES> section below.
+
+=head1 KNOWN ISSUES
+
 When a class is inherited from from a L<Class::Tie::InsideOut> class, then
 it too must be an inside out class and have the fields defined as global
 hashes.  This will affect inherited classes downstream.
 
-The namespaces of super classes which themselves are L<Class::Tie::InsideOut>
-are passed to L<Tie::InsideOut>, so that inherited methods will not cause
-an error.
+Child classes cannot directly access the fields of parent classes. They
+must use appropriate accessor methods from the parent classes.  If they
+create duplicate field names, then those fields can only be accessed
+from within the those classes.
+
+As a consequence of this, classes are not serializable or clonable out
+of the box.
 
 This version does little checking of the key names, beyond that there is a
-global hash variable with that name.  It might be a hash intended as a
-field, or it might be one intended for something else. (You could hide
-them by specifying them as C<my> variables, though.)
+global hash variable with that name in the namespace of the method that
+uses it.  It might be a hash intended as a field, or it might be one intended
+for something else. (You could hide them by specifying them as C<my> variables, though.)
 
 There are no checks against using the name of a tied L<Tie::InsideOut> or
 L<Class::Tie::InsideOut> global hash variable as a key for itself, which
 has unpredicable (and possibly dangerous) results.
+
 
 =for readme continue
 
@@ -142,8 +149,9 @@ has unpredicable (and possibly dangerous) results.
 
 A brief list of changes since the previous release:
 
-=for readme include file="Changes" start="0.03" stop="0.02" type="text"
+=for readme include file="Changes" start="0.04" stop="0.03" type="text"
 
+Incompatible changes are marked with a '*'.
 For a detailed history see the F<Changes> file included in this distribution.
 
 =end readme
