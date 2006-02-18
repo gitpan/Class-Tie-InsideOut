@@ -3,9 +3,9 @@
 use strict;
 use warnings;
 
-use Test::More tests => 22;
+use Test::More tests => 24;
 
-use_ok('Tie::InsideOut', 0.04);
+use_ok('Tie::InsideOut', 0.05);
 
 our %Key1;
 our @Key2;
@@ -15,6 +15,8 @@ our @Key2;
   tie %$hash_ref, 'Tie::InsideOut';
   ok( tied(%$hash_ref), "tied" );
 
+  ok( !scalar(%$hash_ref), "scalar context" );
+
   ok( keys(%Key1) == 0, "no values defined yet");
 
   ok( !defined($hash_ref->{Key1}), "fetch undefined" );
@@ -22,6 +24,8 @@ our @Key2;
   undef $@;
   eval { $hash_ref->{Key1} = 1234; };
   ok( !$@, "no errors in storing valied key" );
+
+  ok( scalar(%$hash_ref), "scalar context" );
 
   ok( keys(%Key1) == 1, "first value stored");
   ok( exists $hash_ref->{Key1}, "exists" );

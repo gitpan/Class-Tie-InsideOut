@@ -6,6 +6,7 @@ WriteMakefile
           'VERSION_FROM' => 'lib/Class/Tie/InsideOut.pm',
           'PREREQ_PM' => {
                            'Carp' => '0',
+                           'Scalar::Util' => '0',
                            'Test::More' => '0'
                          },
           'INSTALLDIRS' => 'site',

@@ -7,11 +7,14 @@ README
 t/01-load.t
 t/01-version.t
 t/02-basic.t
+t/02-storable.t
 t/03-class-base.t
 t/03-class-isa.t
 t/03-inherited.t
+t/03-storable-dclone.t
 t/04-badnamespace.t
 lib/Class/Tie/InsideOut.pm
 lib/Tie/InsideOut.pm
 META.yml
+TODO
 SIGNATURE    Added here by Module::Build

@@ -2,7 +2,7 @@ package Class::Tie::InsideOut;
 
 require Tie::InsideOut;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 our @ISA = qw( );
 
@@ -17,6 +17,8 @@ sub new {
 
 __END__
 
+=for todo stop
+
 =head1 NAME
 
 Class::Tie::InsideOut - Inside-out objects on the cheap using tied hashes
@@ -25,7 +27,7 @@ Class::Tie::InsideOut - Inside-out objects on the cheap using tied hashes
 
 =head1 REQUIREMENTS
 
-Perl 5.6.1. No non-core modules are used.
+Perl 5.6.1, and L<Scalar::Util>.
 
 =head1 INSTALLATION
 
@@ -115,7 +117,29 @@ Converting a Perl module which uses "traditional" objects into one which
 uses inside-out objects can be a matter of adding L<Class::Tie::InsideOut>
 to the C<@ISA> list and adding the field names as global hashes.
 
+However, if child classes do not use parent class methods to access fields
+in the parent class, then there will be problems.
 See the L</KNOWN ISSUES> section below.
+
+=head2 Serialization and Cloning
+
+You can use L<Storable> to serialize clone objects, since there are hooks
+in L<Tie::InsideOut> which allow for this.  To add a clone method to your
+class:
+
+  use Storable qw( dclone );
+
+  ...
+
+  sub clone {
+    my $self = shift;
+    my $clone = dclone($self);
+    return $clone;
+  }
+
+But be aware that if the structure of parent classes are changed, then you may not be
+able to deserialize objects. (The same can happen with tradititional classes,
+but C<Tie::InsideOut> will catch this and return an error.)
 
 =head1 KNOWN ISSUES
 
@@ -128,8 +152,8 @@ must use appropriate accessor methods from the parent classes.  If they
 create duplicate field names, then those fields can only be accessed
 from within the those classes.
 
-As a consequence of this, classes are not serializable or clonable out
-of the box.
+As a consequence of this, objects may not be serializable or clonable out
+of the box. Packages such as L<Clone> and L<Data::Dumper> will not work properly.
 
 This version does little checking of the key names, beyond that there is a
 global hash variable with that name in the namespace of the method that
@@ -140,6 +164,29 @@ There are no checks against using the name of a tied L<Tie::InsideOut> or
 L<Class::Tie::InsideOut> global hash variable as a key for itself, which
 has unpredicable (and possibly dangerous) results.
 
+=begin todo
+
+=head1 TODO
+
+To-do list for L<Class::Tie::InsideOut> and L<Tie::InsideOut>
+
+=head2 Tests
+
+=over
+
+=item *
+
+Verify that deserialization into a different namespace causes an error.
+
+=item *
+
+Add the usual "kwalitee" tests.
+
+=back
+
+=end todo
+
+=for todo stop
 
 =for readme continue
 
@@ -149,7 +196,7 @@ has unpredicable (and possibly dangerous) results.
 
 A brief list of changes since the previous release:
 
-=for readme include file="Changes" start="0.04" stop="0.03" type="text"
+=for readme include file="Changes" start="0.05" stop="0.04" type="text"
 
 Incompatible changes are marked with a '*'.
 For a detailed history see the F<Changes> file included in this distribution.

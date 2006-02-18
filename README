@@ -3,7 +3,7 @@ NAME
     hashes
 
 REQUIREMENTS
-    Perl 5.6.1. No non-core modules are used.
+    Perl 5.6.1, and Scalar::Util.
 
 INSTALLATION
     Installation can be done using the traditional Makefile.PL or the newer
@@ -55,15 +55,20 @@ DESCRIPTION
 REVISION HISTORY
     A brief list of changes since the previous release:
 
-    0.04 Thu Feb 16 2006
-            - added MANIFEST.SKIP
-            * encapsulation is enforced: fields may only be accessed by
-              methods which exist in the same namespace
-            * Tie::InsideOut no longer uses a list of namespaces
-            - removed usage of Class::ISA
-            - Tie::InsideOut uses Carp
-            - reorganized documentation to reflect various changes
-            - removed Clone and Storable tests
+    0.05 Sat Feb 18 2006
+            - additional documentation
+            - added Storable freeze, thaw and dclone tests
+            - added TODO file
+            - FIRSTKEY properly resets the each iterator
+            - added SCALAR method
+            - Tie::InsideOut is a Tie::Hash module
+            - properly detects namespace for calls from within evals
+            - added Storable hooks for serialization
+            - improved handling of references to main namespace
+            - removed UNTIE method
+            - uses refaddr function for id rather than a counter
+            - requires Scalar::Util
+            - added keywords and resources to Build.PL for META.yml
 
     Incompatible changes are marked with a '*'. For a detailed history see
     the Changes file included in this distribution.

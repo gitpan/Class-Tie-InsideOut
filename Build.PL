@@ -7,9 +7,11 @@ my $build = Module::Build->new
      requires => {
        'perl'             => '5.6.1',
        'Carp'             => 0,
+       'Scalar::Util'     => 0,
      },
      recommends => {
        'Pod::Readme'      => 0.06,           # for building distro
+       'Storable'         => 0,              #
      },
      build_requires => {
        'Test::More'     => 0,
@@ -18,6 +20,15 @@ my $build = Module::Build->new
      create_makefile_pl => 'traditional',
      dist_author        => 'Robert Rothenberg <rrwo at cpan.org>',
      sign               => 1,
+     keywords           => [
+       "inside-out objects",
+       "moebius objects",
+       "tied hashes",
+     ],
+     resources          => {
+       license          => 'http://dev.perl.org/licenses/',
+       bugtracker       => 'http://rt.cpan.org/Public/Dist/Display.html?Name=Class-Tie-InsideOut',
+     },
 );
 
 $build->create_build_script;

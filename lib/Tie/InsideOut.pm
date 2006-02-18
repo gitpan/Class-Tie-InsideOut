@@ -5,29 +5,65 @@ use strict;
 use warnings;
 
 use Carp qw( croak );
+use Scalar::Util qw( refaddr );
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
-my $Counter;
-my %NameSpaces;
-my %Keys;
+our @ISA = qw( );
+
+my %NameSpaces;               # default namespace for each hash
+my %Keys;                     # tracks defined keys and namespaces
+
+=begin internal
+
+The %Keys hash is structured as follows:
+
+  $Keys{$id}->{$key}->{$namespace}        = $hash_ref
+
+C<$id> refers to the unique object identifier (returned by the L</_get_id> method).
+
+C<$key> refers to the name of the hash key, qhich corresponds to the name of a hash
+variable in the C<$namespace>.
+
+C<$namespace> refers to the namespace that the value is in. Encapsulation means
+that child classes can use the same key names without conflict.
+
+C<$hash_ref> is a reference to the hash variable that contains the value. Which is
+accessible:
+
+  $Keys{$id}->{$key}->{$namespace}->{$id} = $value
+
+We maintain a structure that incidcates where all of the keys are so that we can
+clean up the data when the object is destroyed.  It also allows us to serialize
+and deserialize data.
+
+=end internal
+
+=cut
 
 sub TIEHASH {
-  my $class = shift || __PACKAGE__;
-  my $id    = ++$Counter;
+  my $class  = shift || __PACKAGE__;
 
+  my $scalar;
+  my $self  = \$scalar;
+  bless $self, $class;
+
+  my $id    = $self->_get_id;
   {
     my $caller = shift || (caller)[0];
     no strict 'refs';
     $NameSpaces{$id} = $caller;
   }
-  $Keys{$id} = { };
+  $self->CLEAR;
 
-  my $self  = \$id;
-  bless $self, $class;
+  return $self;
 }
 
-sub UNTIE {
+BEGIN {
+  *new = \&TIEHASH;
+}
+
+sub DESTROY {
   my $self = shift;
   my $id   = $self->_get_id;
 
@@ -37,10 +73,6 @@ sub UNTIE {
   delete $NameSpaces{$id};
 }
 
-sub DESTROY {
-  goto &UNTIE;
-}
-
 sub CLEAR {
   my $self = shift;
   my $id   = $self->_get_id;
@@ -48,9 +80,17 @@ sub CLEAR {
   foreach my $key (keys %{$Keys{$id}}) {
     foreach my $namespace (keys %{$Keys{$id}->{$key}}) {
       delete $Keys{$id}->{$key}->{$namespace}->{$id};
+      delete $Keys{$id}->{$key}->{$namespace};
     }
+    delete $Keys{$id}->{$key};
   }
   $Keys{$id} = { };
+}
+
+sub SCALAR {
+  my $self = shift;
+  my $id   = $self->_get_id;
+  return scalar (%{$Keys{$id}});
 }
 
 sub FETCH {
@@ -70,11 +110,12 @@ sub EXISTS {
 }
 
 # Being able to iterate over the keys is useful, but limited. After version
-# 0.03, encapsulation is enforced.
+# 0.04, encapsulation is enforced.
 
 sub FIRSTKEY {
   my $self = shift;
   my $id   = $self->_get_id;
+  my $aux  = keys %{$Keys{$id}}; # reset each iterator
   return each %{$Keys{$id}};
 }
 
@@ -103,8 +144,9 @@ sub STORE {
   $hash_ref->{$id}    = $val;
 }
 
-sub prefreeze {
+sub STORABLE_freeze {
   my $self = shift;
+  my $deep = shift; # return if ($deep);
   my $id   = $self->_get_id;
 
   my $struc = { };
@@ -113,24 +155,29 @@ sub prefreeze {
 
   foreach my $key (keys %{$Keys{$id}}) {
     foreach my $namespace (keys %{$Keys{$id}->{$key}}) {
-      $struc->{$key}->{$namespace} = $index;
+      my $package = *{$Keys{$id}->{$key}->{$namespace}}{PACKAGE};
+      $struc->{$key}->{$package} = $index;
       $refs->[$index++] = $Keys{$id}->{$key}->{$namespace}->{$id};
     }
   }
 
-  return $refs;
+  return ($index, $refs);
 }
 
-sub prethaw {
+sub STORABLE_thaw {
   my $self = shift;
-  my $id   = $self->_get_id;
-
-  my $refs = shift;
-
-  croak("Namespaces do not match: ", $NameSpaces{$id}, " and ", $refs->[0]),
-    unless ($NameSpaces{$id} eq $refs->[0]);
+  my $deep = shift; # return if ($deep);
 
   $self->CLEAR;
+  my $id   = $self->_get_id;
+
+  my ($size, $refs) = @_;
+
+  $self->CLEAR if (exists $Keys{$id});
+
+  $NameSpaces{$id} = $refs->[0] unless (defined $NameSpaces{$id}); # Storable just blesses
+  croak("Namespaces do not match: ", $NameSpaces{$id}, " and ", $refs->[0]),
+    unless ($NameSpaces{$id} eq $refs->[0]);
 
   no strict 'refs';
 
@@ -138,7 +185,7 @@ sub prethaw {
   foreach my $key (keys %$struc) {
     foreach my $namespace (keys %{$struc->{$key}}) {
       my $index = $struc->{$key}->{$namespace};
-      $namespace = "main" if ($namespace eq "");
+      croak "No namespace defined" if ($namespace eq "");
 
       my $hash_ref = *{$namespace."::"};
       if ((exists $hash_ref->{$key}) &&  (ref *{$hash_ref->{$key}}{HASH})) {
@@ -150,11 +197,12 @@ sub prethaw {
       }
     }
   }
+  return $self;
 }
 
 sub _get_id {
   my $self = shift;
-  return $$self;
+  return refaddr($self);
 }
 
 sub _validate_key {
@@ -164,17 +212,22 @@ sub _validate_key {
   my $caller_namespace = (caller(2))[3];
   my $hash_ref;
 
-  if ((defined $caller_namespace) && ($caller_namespace ne "(eval)")) {
+  if (defined $caller_namespace) {
     no strict 'refs';
 
-    $caller_namespace =~ s/::(((?!::).)+)$//;
+    if ($caller_namespace eq "(eval)") {
+      $caller_namespace = (caller(2))[0];
+    }
+    else {
+      $caller_namespace =~ s/::(((?!::).)+)$//;
+    }
     $hash_ref = *{$caller_namespace."::"};
   }
   else {
     no strict 'refs';
-    $caller_namespace = "";
     $hash_ref = *{$NameSpaces{$id}."::"}
      || croak "Cannot determine namespace of caller";
+    $caller_namespace = *{$hash_ref}{PACKAGE};
   }
 
   if ((exists $hash_ref->{$key}) &&  (ref *{$hash_ref->{$key}}{HASH})) {
@@ -182,7 +235,7 @@ sub _validate_key {
   }
   else {
     my $err_msg = "Symbol \%".$key." not defined";
-    if ($caller_namespace ne "") {
+    if ($caller_namespace ne "main") {
       $err_msg .= " in namespace ".$caller_namespace;
     }
     croak $err_msg;
@@ -201,7 +254,7 @@ Tie::InsideOut - Tie hashes to variables in caller's namespace
 
 =head1 REQUIREMENTS
 
-Perl 5.6.1. No non-core modules are used.
+Perl 5.6.1, and L<Scalar::Util>.
 
 =head1 INSTALLATION
 
@@ -257,6 +310,31 @@ used keys outweighs the savings is yet to be determined.)
 Note that your keys must be specified as C<our> variables so that they are accessible
 from outside of the class, and not as C<my> variables.
 
+=head2 Serialization
+
+Hashes can be serialized and deserialized using the L<Storable> module's hooks:
+
+  use Tie::Hash 0.05; # version which added support
+
+  tie %hash, 'Tie::InsideOut';
+
+  ...
+
+  my $frozen = freeze( \%hash );
+
+  my $thawed = thaw( $frozen );
+  my %copy   = %{ $thawed };
+
+or one can use the C<dclone> method
+
+  my $clone = dclone(\%hash);
+  my %copy  = %{ $clone };
+
+Deserializing into a different namespace than a tied hash was created in will
+cause errors.
+
+Serialization using packages which do not use these hooks will I<not> work.
+
 =head1 KNOWN ISSUES
 
 This version does little checking of the key names, beyond that there is a
@@ -273,7 +351,8 @@ hash to a method in another object or a subroutine in another module, then it wi
 not be able to access the keys.  This is an intentional limitation for use with
 L<Class::Tie::InsideOut>.
 
-Because of this, tied hashes are not serializable or clonable outside of the box.
+Because of this, naive serialization and cloning using packages like
+L<Data::Dumper> will not work. See the L</Serialization> section.
 
 =head1 SEE ALSO
 

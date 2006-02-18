@@ -1,0 +1,9 @@
+TODO
+    To-do list for Class::Tie::InsideOut and Tie::InsideOut
+
+  Tests
+    *   Verify that deserialization into a different namespace causes an
+        error.
+
+    *   Add the usual "kwalitee" tests.
+

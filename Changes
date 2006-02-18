@@ -2,6 +2,21 @@ Revision history for Perl extension Tie::InsideOut and Class::Tie::InsideOut.
 
 Possible incompatabilities with previous versions are highlighted with a '*'.
 
+0.05 Sat Feb 18 2006
+	- additional documentation
+	- added Storable freeze, thaw and dclone tests
+	- added TODO file
+	- FIRSTKEY properly resets the each iterator
+	- added SCALAR method
+	- Tie::InsideOut is a Tie::Hash module
+	- properly detects namespace for calls from within evals
+	- added Storable hooks for serialization
+	- improved handling of references to main namespace
+	- removed UNTIE method
+	- uses refaddr function for id rather than a counter
+	- requires Scalar::Util
+	- added keywords and resources to Build.PL for META.yml
+
 0.04 Thu Feb 16 2006
 	- added MANIFEST.SKIP
 	* encapsulation is enforced: fields may only be accessed by

@@ -43,7 +43,7 @@ sub inherited_foo {
 sub my_bar {
   my $self = shift;
   if (@_) {
-    return $self->{bar} = shift;
+    eval { $self->{bar} = shift; };
   } else {
     return $self->{bar};
   }
