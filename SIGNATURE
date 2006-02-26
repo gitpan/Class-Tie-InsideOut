@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.50.
+signed via the Module::Signature module, version 0.53.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -14,16 +14,16 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 fb652c028cdba222f81f2d59be716ab90daf5cc8 Build.PL
-SHA1 a36a50ea067459f67569f4fa6982b4d77d8263ff Changes
-SHA1 5d61dcc27fcf7edde5f30be26bb16d583b9155e9 MANIFEST
+SHA1 7ed0a9fae2e8318327a3a44150604bb92d83ac62 Build.PL
+SHA1 ab937cfa36de666ea5b8a4a03b79ba1de4e90fa3 Changes
+SHA1 a0d8fac9700107b97695d14cceaa43c12b886e69 MANIFEST
 SHA1 1015b560244d48a8be920ef2a0f9cf3d8f9d40ef MANIFEST.SKIP
-SHA1 65977b7b78b6c5b2712510bc8fc509dccf8093c2 META.yml
+SHA1 0d4652c3726d85855d3191c88e2f340c68f6b022 META.yml
 SHA1 ee6d890737ef1eae0c50432518d1f16b38c2c051 Makefile.PL
-SHA1 fe5ddfc6cc279aea3738e2b07fa34861626f2988 README
-SHA1 eea44b28a0507326b4b16addb9de307bd74d1f49 TODO
-SHA1 c648e6ac39bc12457929a03cd0ac7de3bf7b6462 lib/Class/Tie/InsideOut.pm
-SHA1 8b29991e0430886135ed0900b60654eee21d6c86 lib/Tie/InsideOut.pm
+SHA1 be91eaf20cbe2802f171ec69a17432a2a74ab3b5 README
+SHA1 ab8c7705c49afa5369abaa86c8d42e8c0d03761e TODO
+SHA1 758b348a915ae209d7e74025f9990db9e8eee613 lib/Class/Tie/InsideOut.pm
+SHA1 61622cf901be62af5ab4ce8221bf468acfb2c654 lib/Tie/InsideOut.pm
 SHA1 9bb746ab8c3e8062a298746aa1ecd097d3f182bc t/01-load.t
 SHA1 3811cd7aa51062321653f2fc089cf6cd301e9605 t/01-version.t
 SHA1 35632a0393f9c988b79ae35b4832bcff777f56ac t/02-basic.t
@@ -33,17 +33,21 @@ SHA1 47dff68babb9bd4ceb3346f41402149b60dabbc6 t/03-class-isa.t
 SHA1 358905810da1bfaf82af6a107d8903911684c9c5 t/03-inherited.t
 SHA1 91d7105a6215585dfb5887040877f720063ea8f1 t/03-storable-dclone.t
 SHA1 fd09950f1792cf3baa4ddb110a21ffdbb779bd59 t/04-badnamespace.t
+SHA1 fdab73206531b5112fb56bfaa74e263bc7893481 t/05-class-accessor-fast.t
+SHA1 24651bd769d2e6edcd52a634a970990dd2baff15 t/05-class-accessor-set.t
+SHA1 74aaf6a87a6f32f7b5b635d05d3ff5dbc527e063 t/05-class-accessor.t
+SHA1 64f7753242ca9d3849740ffeba60e42e8b644e72 t/05-class-field.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.1 (GNU/Linux)
 
-iQGZAwUBQ/cuTcWi0Y+7ctnFAQI8KgwfSQiFpAXSG/cgviOIS9nwOWwzDIb8zW08
-Y27NTYkQSf/hyWx3BVG9h86FTsRgRbSJvN4QTtD66h9vXO3BMkCncyfeo6uYM+cy
-bvt361S3XOOY08VcUME5eBndKaJRWbq3U2OAIcz7ZobqV1TwJi6m6vnFbX+SdW/I
-rmUUlkxricO1YG4ZOwfFXhFNh7CQJ8jAL9W9F/JR1MVVFA93u+q4oQNuYWXUpPv4
-1RqImOmsoKLHZ6ZuIHoSoovWE6bYnTzYwjKYnBm5QiRXvYjxh3nrT5I+rCZIC5jX
-SeqmO+vxj1zVnevXETMi5NwjFmptU8meg9lL178YwqZHl2yQv623ThVERDmSYBYo
-J8luMGrtv0WA93mAOPBFk9dX4k4maPCpdXm56dsLICkv3njH9DU6SoaASVMSm1gR
-80xHUUXvlVmEc9484/7+a7dGQjyT4pyVj1tNHMYR+MPSHlM2YfnLvKwhI7UPG7Wr
-6mlEfbNCTxBzO9AXC5tHa0qPvGQy9zIYoaHPJg==
-=5YHf
+iQGZAwUBRAHdesWi0Y+7ctnFAQK8ZAwfRAbqozvr3GYsIp/RF74xm9sEQTY6lPLW
+opofgCaWSOFI/dlVPiXFFERJq1qEn/IdZArC0B2+RAzkIcznil9iPJD4Rv7aXHSv
+ANa8lkR4CrjSingZiL/25V13wt+qPoXph1bSHYJcqwU73MqQDRfZ7/d4rk4KJTSv
+MmEGZ4SC/x+bYMCxprS+rXfFJ0PxrY8009ZcDpQ2xLh/uUQ0fHH14kMxQ2OSpmtL
+kJPqGu8RUnLxMWUzdrQ9NCjECiuNg39+IodulTuux0IX3gwstkQcxkrqbDLR6iyU
+R3kosYp3cKxaiaGyZZStYHmFGC0UJHcfmPRJyP0NaOeWL3XvvadW9h03d86429LX
+nJUHZ5UC809JJ5l389Cm8ir1UR91YOym54Uc1d1gf4KNS+yBAOmsVed3BdrzMD2C
+7k3RZMd0j0mm/mZuszCmivx86Lx65KZ2xfHhTbBmSFAPr/mTLQeJ4Mkj3qHJLZcP
+X8FMe7/P8mLZVgYVklBOfHsROu+ZLcWfsxGoZw==
+=a682
 -----END PGP SIGNATURE-----

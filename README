@@ -55,6 +55,12 @@ DESCRIPTION
 REVISION HISTORY
     A brief list of changes since the previous release:
 
+    0.051 Sun Feb 26 2006
+            - fixed potential undef warning
+            - added to KNOWN ISSUES notes about Class::Accessor et al.
+            - added tests for Class::Accessor et al.
+            - updated TODO list
+    
     0.05 Sat Feb 18 2006
             - additional documentation
             - added Storable freeze, thaw and dclone tests
@@ -79,10 +85,15 @@ SEE ALSO
     There are various other inside-out object packages on CPAN. Among them:
 
       Class::InsideOut
+      Class::Std
       Object::InsideOut
 
 AUTHOR
     Robert Rothenberg <rrwo at cpan.org>
+
+  Acknowledgements
+    Thanks to Ovid (via Chromatic) and Steven Little for advice in PerlMonks
+    on the namespace issues with Class::Accessor.
 
   Suggestions and Bug Reporting
     Feedback is always welcome. Please use the CPAN Request Tracker at

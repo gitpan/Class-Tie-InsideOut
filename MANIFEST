@@ -13,6 +13,10 @@ t/03-class-isa.t
 t/03-inherited.t
 t/03-storable-dclone.t
 t/04-badnamespace.t
+t/05-class-accessor.t
+t/05-class-accessor-fast.t
+t/05-class-accessor-set.t
+t/05-class-field.t
 lib/Class/Tie/InsideOut.pm
 lib/Tie/InsideOut.pm
 META.yml

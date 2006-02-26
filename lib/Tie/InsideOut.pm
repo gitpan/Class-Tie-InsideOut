@@ -7,7 +7,7 @@ use warnings;
 use Carp qw( croak );
 use Scalar::Util qw( refaddr );
 
-our $VERSION = '0.05';
+our $VERSION = '0.051';
 
 our @ISA = qw( );
 
@@ -209,14 +209,23 @@ sub _validate_key {
   my ($self, $key) = @_;
   my $id   = $self->_get_id;
 
+  # We get the name of the subroutine that called us, and use its
+  # namespace to look for the hash that contains the key value.
+
+  # Warning: Perl documentation notes that the caller information may
+  # be optimized away when the value is greater than 1.
+
   my $caller_namespace = (caller(2))[3];
   my $hash_ref;
 
   if (defined $caller_namespace) {
     no strict 'refs';
 
+    # If we're in an eval, then we resort to using the caller package
+
     if ($caller_namespace eq "(eval)") {
       $caller_namespace = (caller(2))[0];
+      $caller_namespace =~ s/\s(eval\(\s\d+)?\)$//; # remove eval
     }
     else {
       $caller_namespace =~ s/::(((?!::).)+)$//;
@@ -224,9 +233,10 @@ sub _validate_key {
     $hash_ref = *{$caller_namespace."::"};
   }
   else {
+    croak "Cannot determine namespace of caller"
+      unless (exists $NameSpaces{$id});
     no strict 'refs';
-    $hash_ref = *{$NameSpaces{$id}."::"}
-     || croak "Cannot determine namespace of caller";
+    $hash_ref = *{$NameSpaces{$id}."::"};
     $caller_namespace = *{$hash_ref}{PACKAGE};
   }
 
@@ -234,6 +244,13 @@ sub _validate_key {
     return ($id, $hash_ref->{$key}, $caller_namespace);
   }
   else {
+
+#     print STDERR "\n\x23 key=$key\n\x23",
+#       join(" ", map {$_||""} (caller(0))), "\n\x23",
+#       join(" ", map {$_||""} (caller(1))), "\n\x23",
+#       join(" ", map {$_||""} (caller(2))), "\n\x23",
+#       join(" ", map {$_||""} (caller(3))), "\n";
+
     my $err_msg = "Symbol \%".$key." not defined";
     if ($caller_namespace ne "main") {
       $err_msg .= " in namespace ".$caller_namespace;

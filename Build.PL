@@ -10,8 +10,9 @@ my $build = Module::Build->new
        'Scalar::Util'     => 0,
      },
      recommends => {
+       'Class::Accessor'  => 0,              # for tests
        'Pod::Readme'      => 0.06,           # for building distro
-       'Storable'         => 0,              #
+       'Storable'         => 0,              # for tests, cloning interface
      },
      build_requires => {
        'Test::More'     => 0,

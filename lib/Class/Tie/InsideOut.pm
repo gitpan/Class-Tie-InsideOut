@@ -2,7 +2,7 @@ package Class::Tie::InsideOut;
 
 require Tie::InsideOut;
 
-our $VERSION = '0.05';
+our $VERSION = '0.051';
 
 our @ISA = qw( );
 
@@ -155,6 +155,33 @@ from within the those classes.
 As a consequence of this, objects may not be serializable or clonable out
 of the box. Packages such as L<Clone> and L<Data::Dumper> will not work properly.
 
+To use with packages which generate accessor methods such as
+L<Class::Accessor> with this, you'll need to define the C<set> and C<get>
+methods inside of your class.
+
+Accessor-generating packages which do not make use of an intermediate
+method are not compatible with this package. This is partly a Perl issue:
+the caller information from closures reflects the namespace of the package
+that created the closure, not the actual package that the closure resides.
+However, the issue is fixable. The subroutine needs to set its namespace:
+
+  $accessor = sub {
+    local *__ANON__ = "${class}::${field}";
+    my $self = shift;
+    ...
+  };
+
+Another alternative is to use L<Sub::Name> to rename subroutines:
+
+  use ::Name;
+
+  $accessor = subname "${class}::${field}" => sub {
+    my $self = shift;
+    ...
+  };
+
+However, L<Sub::Name> uses XS and is not a pure-Perl solution.
+
 This version does little checking of the key names, beyond that there is a
 global hash variable with that name in the namespace of the method that
 uses it.  It might be a hash intended as a field, or it might be one intended
@@ -170,6 +197,29 @@ has unpredicable (and possibly dangerous) results.
 
 To-do list for L<Class::Tie::InsideOut> and L<Tie::InsideOut>
 
+=head2 Enhancements
+
+=over
+
+=item *
+
+Add an equivalent mk_accessors function akin to what L<Class::Accessor>
+does.
+
+=item *
+
+Change FIRSTKEY and NEXTKEY methods in L<Tie::InsideOut> so that they
+only show methods that the caller has access to.
+
+=item *
+
+Add an option so that a default exception handler or callback can be
+given rather than dieing when a key is accessed outside of its
+namespace.  Then one can provide a map of field names to methods to
+call.
+
+=back
+
 =head2 Tests
 
 =over
@@ -177,6 +227,10 @@ To-do list for L<Class::Tie::InsideOut> and L<Tie::InsideOut>
 =item *
 
 Verify that deserialization into a different namespace causes an error.
+
+=item *
+
+Add better tests for FIRSTKEY and NEXTKEY methods in L<Tie::InsideOut>.
 
 =item *
 
@@ -210,11 +264,17 @@ This module is a wrapper for L<Tie::InsideOut>.
 There are various other inside-out object packages on CPAN. Among them:
 
   Class::InsideOut
+  Class::Std
   Object::InsideOut
 
 =head1 AUTHOR
 
 Robert Rothenberg <rrwo at cpan.org>
+
+=head2 Acknowledgements
+
+Thanks to Ovid (via Chromatic) and Steven Little for advice in PerlMonks 
+on the namespace issues with L<Class::Accessor>.
 
 =head2 Suggestions and Bug Reporting
 
