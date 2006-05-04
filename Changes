@@ -2,6 +2,9 @@ Revision history for Perl extension Tie::InsideOut and Class::Tie::InsideOut.
 
 Possible incompatabilities with previous versions are highlighted with a '*'.
 
+0.052 Thu May  4 2006
+	- corrected typo in documentation
+
 0.051 Sun Feb 26 2006
 	- fixed potential undef warning
 	- added to KNOWN ISSUES notes about Class::Accessor et al.

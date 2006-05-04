@@ -2,7 +2,7 @@ package Class::Tie::InsideOut;
 
 require Tie::InsideOut;
 
-our $VERSION = '0.051';
+our $VERSION = '0.052';
 
 our @ISA = qw( );
 
@@ -173,7 +173,7 @@ However, the issue is fixable. The subroutine needs to set its namespace:
 
 Another alternative is to use L<Sub::Name> to rename subroutines:
 
-  use ::Name;
+  use Sub::Name;
 
   $accessor = subname "${class}::${field}" => sub {
     my $self = shift;
@@ -250,7 +250,7 @@ Add the usual "kwalitee" tests.
 
 A brief list of changes since the previous release:
 
-=for readme include file="Changes" start="0.05" stop="0.04" type="text"
+=for readme include file="Changes" start="0.052" stop="0.051" type="text"
 
 Incompatible changes are marked with a '*'.
 For a detailed history see the F<Changes> file included in this distribution.

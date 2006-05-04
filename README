@@ -15,7 +15,7 @@ INSTALLATION
       make test
       make install
 
-    (On Windows platforms you should use "nmake" instead.)
+    (On Windows platforms you should use `nmake' instead.)
 
     Using Build.PL (if you have Module::Build installed):
 
@@ -55,26 +55,8 @@ DESCRIPTION
 REVISION HISTORY
     A brief list of changes since the previous release:
 
-    0.051 Sun Feb 26 2006
-            - fixed potential undef warning
-            - added to KNOWN ISSUES notes about Class::Accessor et al.
-            - added tests for Class::Accessor et al.
-            - updated TODO list
-    
-    0.05 Sat Feb 18 2006
-            - additional documentation
-            - added Storable freeze, thaw and dclone tests
-            - added TODO file
-            - FIRSTKEY properly resets the each iterator
-            - added SCALAR method
-            - Tie::InsideOut is a Tie::Hash module
-            - properly detects namespace for calls from within evals
-            - added Storable hooks for serialization
-            - improved handling of references to main namespace
-            - removed UNTIE method
-            - uses refaddr function for id rather than a counter
-            - requires Scalar::Util
-            - added keywords and resources to Build.PL for META.yml
+    0.052 Thu May  4 2006
+            - corrected typo in documentation
 
     Incompatible changes are marked with a '*'. For a detailed history see
     the Changes file included in this distribution.
@@ -92,10 +74,12 @@ AUTHOR
     Robert Rothenberg <rrwo at cpan.org>
 
   Acknowledgements
+
     Thanks to Ovid (via Chromatic) and Steven Little for advice in PerlMonks
     on the namespace issues with Class::Accessor.
 
   Suggestions and Bug Reporting
+
     Feedback is always welcome. Please use the CPAN Request Tracker at
     http://rt.cpan.org to submit bug reports.
 
