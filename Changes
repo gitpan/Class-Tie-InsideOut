@@ -2,6 +2,12 @@ Revision history for Perl extension Tie::InsideOut and Class::Tie::InsideOut.
 
 Possible incompatabilities with previous versions are highlighted with a '*'.
 
+0.053 Wed Oct 25 2006
+	- no functional changes to distro
+	- tests no longer make use of Class::Accessor (TODO bugs)
+	- distro is no longer signed due to Module::Signature issues
+	- minor changes to README
+
 0.052 Thu May  4 2006
 	- corrected typo in documentation
 

@@ -1,6 +1,6 @@
 ---
 name: Class-Tie-InsideOut
-version: 0.052
+version: 0.053
 author:
   - 'Robert Rothenberg <rrwo at cpan.org>'
 abstract: Inside-out objects on the cheap using tied hashes
@@ -14,17 +14,16 @@ requires:
 build_requires:
   Test::More: 0
 recommends:
-  Class::Accessor: 0
   Pod::Readme: 0.06
   Storable: 0
 provides:
   Class::Tie::InsideOut:
     file: lib/Class/Tie/InsideOut.pm
-    version: 0.052
+    version: 0.053
   Tie::InsideOut:
     file: lib/Tie/InsideOut.pm
-    version: 0.052
-generated_by: Module::Build version 0.2707
+    version: 0.053
+generated_by: Module::Build version 0.2805
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2

@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 eval "use Class::Accessor;";
+
 use Class::Tie::InsideOut;
 
 our @ISA = qw( Class::Tie::InsideOut Class::Accessor );
@@ -29,7 +30,7 @@ package main;
 use strict;
 use warnings;
 
-use Test::More; # skip_all => "Class::Accessor fails tests";
+use Test::More skip_all => "Class::Accessor fails tests";
 
 eval "use Class::Accessor;";
 plan skip_all => "Class::Accessor is not installed" if ($@);

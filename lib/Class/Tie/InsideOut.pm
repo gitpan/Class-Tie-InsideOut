@@ -2,7 +2,7 @@ package Class::Tie::InsideOut;
 
 require Tie::InsideOut;
 
-our $VERSION = '0.052';
+our $VERSION = '0.053';
 
 our @ISA = qw( );
 
@@ -250,7 +250,7 @@ Add the usual "kwalitee" tests.
 
 A brief list of changes since the previous release:
 
-=for readme include file="Changes" start="0.052" stop="0.051" type="text"
+=for readme include file="Changes" start="0.053" stop="0.052" type="text"
 
 Incompatible changes are marked with a '*'.
 For a detailed history see the F<Changes> file included in this distribution.
@@ -259,7 +259,11 @@ For a detailed history see the F<Changes> file included in this distribution.
 
 =head1 SEE ALSO
 
+=for readme stop
+
 This module is a wrapper for L<Tie::InsideOut>.
+
+=for readme continue
 
 There are various other inside-out object packages on CPAN. Among them:
 

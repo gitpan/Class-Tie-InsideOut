@@ -10,7 +10,7 @@ my $build = Module::Build->new
        'Scalar::Util'     => 0,
      },
      recommends => {
-       'Class::Accessor'  => 0,              # for tests
+#       'Class::Accessor'  => 0,              # for tests
        'Pod::Readme'      => 0.06,           # for building distro
        'Storable'         => 0,              # for tests, cloning interface
      },
@@ -20,7 +20,7 @@ my $build = Module::Build->new
      create_readme      => ($Module::Build::VERSION >= 0.2702),
      create_makefile_pl => 'traditional',
      dist_author        => 'Robert Rothenberg <rrwo at cpan.org>',
-     sign               => 1,
+     sign               => 0,
      keywords           => [
        "inside-out objects",
        "moebius objects",

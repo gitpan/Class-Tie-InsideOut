@@ -55,15 +55,16 @@ DESCRIPTION
 REVISION HISTORY
     A brief list of changes since the previous release:
 
-    0.052 Thu May  4 2006
-            - corrected typo in documentation
+    0.053 Wed Oct 25 2006
+            - no functional changes to distro
+            - tests no longer make use of Class::Accessor (TODO bugs)
+            - distro is no longer signed due to Module::Signature issues
+            - minor changes to README
 
     Incompatible changes are marked with a '*'. For a detailed history see
     the Changes file included in this distribution.
 
 SEE ALSO
-    This module is a wrapper for Tie::InsideOut.
-
     There are various other inside-out object packages on CPAN. Among them:
 
       Class::InsideOut
