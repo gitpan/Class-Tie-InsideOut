@@ -1,29 +1,33 @@
 ---
-name: Class-Tie-InsideOut
-version: 0.053
+abstract: 'Inside-out objects on the cheap using tied hashes'
 author:
   - 'Robert Rothenberg <rrwo at cpan.org>'
-abstract: Inside-out objects on the cheap using tied hashes
-license: perl
-resources:
-  license: http://dev.perl.org/licenses/
+  - 'Robert Rothenberg <rrwo@cpan.org>'
+build_requires:
+  ExtUtils::MakeMaker: 6.59
+  Test::More: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.59
+  Module::Install: 0
+distribution_type: module
+dynamic_config: 1
+generated_by: 'Module::Install version 1.06'
+license: artistic2
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Class-Tie-InsideOut
+no_index:
+  directory:
+    - inc
+    - t
 requires:
   Carp: 0
   Scalar::Util: 0
   perl: 5.6.1
-build_requires:
-  Test::More: 0
-recommends:
-  Pod::Readme: 0.06
-  Storable: 0
-provides:
-  Class::Tie::InsideOut:
-    file: lib/Class/Tie/InsideOut.pm
-    version: 0.053
-  Tie::InsideOut:
-    file: lib/Tie/InsideOut.pm
-    version: 0.053
-generated_by: Module::Build version 0.2805
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
+resources:
+  bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=Class-Tie-InsideOut
+  homepage: http://rrwo.tumblr.com
+  license: http://www.perlfoundation.org/artistic_license_2_0
+  repository: git://github.com:robrwo/Class-Tie-InsideOut.git
+version: 0.11

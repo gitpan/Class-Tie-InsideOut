@@ -2,7 +2,7 @@ package Class::Tie::InsideOut;
 
 require Tie::InsideOut;
 
-our $VERSION = '0.053';
+our $VERSION = '0.11';
 
 our @ISA = qw( );
 
@@ -31,22 +31,13 @@ Perl 5.6.1, and L<Scalar::Util>.
 
 =head1 INSTALLATION
 
-Installation can be done using the traditional Makefile.PL or the newer
-Build.PL methods.
+Installation can be done using the traditional Makefile.PL method:
 
 Using Makefile.PL:
 
   perl Makefile.PL
   make test
   make install
-
-(On Windows platforms you should use C<nmake> instead.)
-
-Using Build.PL (if you have Module::Build installed):
-
-  perl Build.PL
-  perl Build test
-  perl Build install
 
 =end readme
 
@@ -72,9 +63,9 @@ Using Build.PL (if you have Module::Build installed):
 
 =head1 DESCRIPTION
 
-This module is a proof-of-concept on of implementing inside-out objects
-using tied hashes.  It makes use of the L<Tie::InsideOut> package to tie
-hash keys to hashes in the calling package's namespace.
+This module is a proof-of-concept for implementing inside-out objects
+using tied hashes.  It makes use of the L<Tie::InsideOut> package to
+tie hash keys to hashes in the calling package's namespace.
 
 Fields are accessed as hash keys, so in traditional Perl objects can be
 easily converted into inside-out objects.
@@ -250,9 +241,8 @@ Add the usual "kwalitee" tests.
 
 A brief list of changes since the previous release:
 
-=for readme include file="Changes" start="0.053" stop="0.052" type="text"
+=for readme include file="Changes" start="0.11" stop="0.053" type="text"
 
-Incompatible changes are marked with a '*'.
 For a detailed history see the F<Changes> file included in this distribution.
 
 =end readme
@@ -277,7 +267,7 @@ Robert Rothenberg <rrwo at cpan.org>
 
 =head2 Acknowledgements
 
-Thanks to Ovid (via Chromatic) and Steven Little for advice in PerlMonks 
+Thanks to Ovid (via Chromatic) and Steven Little for advice in PerlMonks
 on the namespace issues with L<Class::Accessor>.
 
 =head2 Suggestions and Bug Reporting
@@ -285,11 +275,18 @@ on the namespace issues with L<Class::Accessor>.
 Feedback is always welcome.  Please use the CPAN Request Tracker at
 L<http://rt.cpan.org> to submit bug reports.
 
+=head1 STATUS
+
+This module has not been seriously updated since 2006, and inside-out
+objects have largely fallen out of favor since then.
+
+It has been marked as C<ADOPTME> on CPAN.
+
 =head1 LICENSE
 
-Copyright (c) 2006 Robert Rothenberg. All rights reserved.
-This program is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself.
+Copyright (c) 2006,2014 Robert Rothenberg. All rights reserved.  This
+program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
 
 =cut
 

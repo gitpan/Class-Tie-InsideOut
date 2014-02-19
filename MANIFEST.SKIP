@@ -4,6 +4,7 @@ _darcs\b
 \bCVS\b
 ,v$
 \B\.svn\b
+\.git
 
 # Avoid Makemaker generated and utility files.
 \bMANIFEST\.bak
@@ -11,6 +12,7 @@ _darcs\b
 \bblib/
 \bMakeMaker-\d
 \bpm_to_blib$
+\bMYMETA\.
 
 # Avoid Module::Build generated and utility files.
 \bBuild$
@@ -23,3 +25,7 @@ _darcs\b
 \b\.#
 \.bak$
 
+# Avoid Distributions
+
+Class-Tie-InsideOut-\d.*
+\binc/

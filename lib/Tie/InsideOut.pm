@@ -7,7 +7,7 @@ use warnings;
 use Carp qw( croak );
 use Scalar::Util qw( refaddr );
 
-our $VERSION = '0.053';
+our $VERSION = '0.11';
 
 our @ISA = qw( );
 
@@ -376,6 +376,9 @@ L<Data::Dumper> will not work. See the L</Serialization> section.
 L<perltie>
 
 L<Class::Tie::InsideOut>
+
+If you are looking for a method of restricting hash keys, try
+L<Hash::Utils>.
 
 =head1 AUTHOR
 

@@ -6,22 +6,13 @@ REQUIREMENTS
     Perl 5.6.1, and Scalar::Util.
 
 INSTALLATION
-    Installation can be done using the traditional Makefile.PL or the newer
-    Build.PL methods.
+    Installation can be done using the traditional Makefile.PL method:
 
     Using Makefile.PL:
 
       perl Makefile.PL
       make test
       make install
-
-    (On Windows platforms you should use `nmake' instead.)
-
-    Using Build.PL (if you have Module::Build installed):
-
-      perl Build.PL
-      perl Build test
-      perl Build install
 
 SYNOPSIS
       package MyClass;
@@ -43,7 +34,7 @@ SYNOPSIS
       }
 
 DESCRIPTION
-    This module is a proof-of-concept on of implementing inside-out objects
+    This module is a proof-of-concept for implementing inside-out objects
     using tied hashes. It makes use of the Tie::InsideOut package to tie
     hash keys to hashes in the calling package's namespace.
 
@@ -55,14 +46,31 @@ DESCRIPTION
 REVISION HISTORY
     A brief list of changes since the previous release:
 
-    0.053 Wed Oct 25 2006
-            - no functional changes to distro
-            - tests no longer make use of Class::Accessor (TODO bugs)
-            - distro is no longer signed due to Module::Signature issues
-            - minor changes to README
+    0.11   2014-02-19
+    
+           - No functional changes to distro.
+    
+           - Added note about status.
+    
+           - Removed reference to Build.PL from POD and README.
+    
+           - Deleted matching version test.
+    
+           - Added note about Hash::Utils in SEE ALSO section.
+    
+    0.10   2014-02-19
+    
+           - No functional changes to distro.
+    
+           - Reformatted Changes to CPAN::Changes::Spec.
+    
+           - Changes to use Module::Install for Makefile.PL and removed
+                 Build.PL.
+    
+           - Modernised distribution for GitHub.
 
-    Incompatible changes are marked with a '*'. For a detailed history see
-    the Changes file included in this distribution.
+    For a detailed history see the Changes file included in this
+    distribution.
 
 SEE ALSO
     There are various other inside-out object packages on CPAN. Among them:
@@ -75,17 +83,21 @@ AUTHOR
     Robert Rothenberg <rrwo at cpan.org>
 
   Acknowledgements
-
     Thanks to Ovid (via Chromatic) and Steven Little for advice in PerlMonks
     on the namespace issues with Class::Accessor.
 
   Suggestions and Bug Reporting
-
     Feedback is always welcome. Please use the CPAN Request Tracker at
     http://rt.cpan.org to submit bug reports.
 
+STATUS
+    This module has not been seriously updated since 2006, and inside-out
+    objects have largely fallen out of favor since then.
+
+    It has been marked as `ADOPTME' on CPAN.
+
 LICENSE
-    Copyright (c) 2006 Robert Rothenberg. All rights reserved. This program
-    is free software; you can redistribute it and/or modify it under the
-    same terms as Perl itself.
+    Copyright (c) 2006,2014 Robert Rothenberg. All rights reserved. This
+    program is free software; you can redistribute it and/or modify it under
+    the same terms as Perl itself.
 

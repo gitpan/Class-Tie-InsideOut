@@ -1,67 +1,133 @@
 Revision history for Perl extension Tie::InsideOut and Class::Tie::InsideOut.
 
-Possible incompatabilities with previous versions are highlighted with a '*'.
+0.11   2014-02-19
 
-0.053 Wed Oct 25 2006
-	- no functional changes to distro
-	- tests no longer make use of Class::Accessor (TODO bugs)
-	- distro is no longer signed due to Module::Signature issues
-	- minor changes to README
+       - No functional changes to distro.
 
-0.052 Thu May  4 2006
-	- corrected typo in documentation
+       - Added note about status.
 
-0.051 Sun Feb 26 2006
-	- fixed potential undef warning
-	- added to KNOWN ISSUES notes about Class::Accessor et al.
-	- added tests for Class::Accessor et al.
-	- updated TODO list
+       - Removed reference to Build.PL from POD and README.
 
-0.05 Sat Feb 18 2006
-	- additional documentation
-	- added Storable freeze, thaw and dclone tests
-	- added TODO file
-	- FIRSTKEY properly resets the each iterator
-	- added SCALAR method
-	- Tie::InsideOut is a Tie::Hash module
-	- properly detects namespace for calls from within evals
-	- added Storable hooks for serialization
-	- improved handling of references to main namespace
-	- removed UNTIE method
-	- uses refaddr function for id rather than a counter
-	- requires Scalar::Util
-	- added keywords and resources to Build.PL for META.yml
+       - Deleted matching version test.
 
-0.04 Thu Feb 16 2006
-	- added MANIFEST.SKIP
-	* encapsulation is enforced: fields may only be accessed by
-	  methods which exist in the same namespace
-	* Tie::InsideOut no longer uses a list of namespaces
-	- removed usage of Class::ISA
-	- Tie::InsideOut uses Carp
-	- reorganized documentation to reflect various changes
-	- removed Clone and Storable tests
+       - Added note about Hash::Utils in SEE ALSO section.
 
-0.03 Mon Feb 13 2006
-	- updated documentation
-	- inheritance issues fixed, requires Class::ISA
-	- Tie::InsideOut can accept a list of namespaces to search
-	- recent revision history included in README
-	- use strict/warnings in tests
-	- added test to verify that versions match
-	- added test 'use base'
-	- added serialization tests with Clone and Storable
+0.10   2014-02-19
 
-0.021 Mon Feb 13 2006
-	- removed namespace validation, which was too strict
+       - No functional changes to distro.
 
-0.02  Mon Feb 13 2006
-	- added more tests
-	- fixed namespace validation
-	- checks that the symbol used for the key is a hash
-	- reorganized documentation
+       - Reformatted Changes to CPAN::Changes::Spec.
 
-0.01  Sun Feb 12 18:59:12 2006
-	- original version; created by h2xs 1.23 with options
-		-n Tie::InsideOut -v 0.01 -b 5.6.1 -X
+       - Changes to use Module::Install for Makefile.PL and removed
+         Build.PL.
+
+       - Modernised distribution for GitHub.
+
+0.053  2006-10-25
+
+       - No functional changes to distro.
+
+       - Tests no longer make use of Class::Accessor (TODO bugs).
+
+       - Distro is no longer signed due to Module::Signature issues.
+
+       - Minor changes to README.
+
+0.052  2006-05-04
+
+       - corrected typo in documentation.
+
+0.051  2006-02-26
+
+       - Fixed potential undef warning.
+
+       - Added to KNOWN ISSUES notes about Class::Accessor et al.
+
+       - Added tests for Class::Accessor et al.
+
+       - Updated TODO list.
+
+0.05   2006-02-18
+
+       - Additional documentation.
+
+       - Added tests.
+
+       - Added TODO file.
+
+       - FIRSTKEY properly resets the each iterator.
+
+       - added SCALAR method.
+
+       - Tie::InsideOut is a Tie::Hash module.
+
+       - Properly detects namespace for calls from within evals.
+
+       - Added Storable hooks for serialization.
+
+       - Improved handling of references to main namespace.
+
+       - Removed UNTIE method.
+
+       - Uses refaddr function for id rather than a counter.
+
+       - Requires Scalar::Util.
+
+       - Added keywords and resources to Build.PL for META.yml.
+
+0.04  2006-02-16
+
+      - Added MANIFEST.SKIP.
+
+      - Removed usage of Class::ISA.
+
+      - Tie::InsideOut uses Carp.
+
+      - Reorganized documentation to reflect various changes.
+
+      - Removed Clone and Storable tests.
+
+      [Incompatible Changes]
+
+      - Encapsulation is enforced: fields may only be accessed by
+        methods which exist in the same namespace
+
+      - Tie::InsideOut no longer uses a list of namespaces.
+
+0.03  2006-02-13
+
+      - Updated POD.
+
+      - Inheritance issues fixed, requires Class::ISA.
+
+      - Tie::InsideOut can accept a list of namespaces to search.
+
+      - Recent revision history included in README.
+
+      - Use strict/warnings in tests.
+
+      - Added test to verify that versions match.
+
+      - Added test 'use base'.
+
+      - Added serialization tests with Clone and Storable.
+
+0.021  2006-02-13
+
+       - Removed namespace validation, which was too strict.
+
+0.02   2006-02-13
+
+       - Added more tests.
+
+       - Fixed namespace validation.
+
+       - Checks that the symbol used for the key is a hash.
+
+       - Reorganized documentation.
+
+0.01  2006-02-12
+
+	- original version
+
 
